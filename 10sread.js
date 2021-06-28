@@ -1,9 +1,8 @@
 /*
 10s阅读
 微信打开立即参与 -> http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy
-备用链接 -> http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy
+备用链接 -> http://h5.jiangqz.xyz/j/r2?upuid=161437&ch=xmy
 
-原仓:https://cdn.jsdelivr.net/gh/Wenmoux/scripts@wen/other/jrkuaixun.js
 每小时有0.3 一天5轮 一天1.5
 进不去关注10秒读书极速版公众号用官方链接
 使用方法:点击开始阅读 成功阅读一次即可抓到包
