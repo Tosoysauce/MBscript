@@ -25,6 +25,7 @@ https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122
 然后添加变量
 
 export Readck="复制的cookie"  ## 包含 PHPSESSID=xxx;udtauth==xxx
+
 export ReadckAgent="协议头"  ## User-Agent 的值，不包含 User-Agent
 
 https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122906.png
