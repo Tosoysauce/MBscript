@@ -1,8 +1,9 @@
 /*
 10s阅读
-立即参与 -> http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy
-备用链接 -> http://h5.jiangqz.xyz/j/r2?upuid=161437&ch=xmy
+微信打开立即参与 -> http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy
+备用链接 -> http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy
 
+原仓:https://cdn.jsdelivr.net/gh/Wenmoux/scripts@wen/other/jrkuaixun.js
 每小时有0.3 一天5轮 一天1.5
 进不去关注10秒读书极速版公众号用官方链接
 使用方法:点击开始阅读 成功阅读一次即可抓到包
@@ -10,8 +11,8 @@
 每次运行都要手动验证一次(也就是一天5次)
 点立即阅读,等文章出来后关闭页面(注意 千万不要返回)
 拉一人头提现0.3奖励0.5 0.8再奖励0.5
+https://t.me/wenmou_car
 
-圈x
 [task_local]
 #10s阅读
 0 8-14/1 * * * https://raw.githubusercontent.com/Wenmoux/scripts/wen/other/jrkuaixun.js, tag=10s阅读, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
@@ -40,7 +41,6 @@ let ReadckAgent = "";
 if ($.isNode()) {
     cookiesArr = process.env.Readck ? process.env.Readck.split("@") : []
     host = process.env.readapi ? process.env.readapi : host
-	ReadckAgent = process.env.ReadckAgent
 }
 message = ""
     !(async () => {
@@ -116,7 +116,6 @@ function read(url1) {
             cookie,
             referer:url,
             "X-Requested-With": "XMLHttpRequest"
-			"User-Agent":ReadckAgent
         }
         let options = {
             headers,
