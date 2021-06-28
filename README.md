@@ -1,10 +1,14 @@
 #说明
 此仓库备份大佬的脚本,脚本使用请看使用说明,如无法加载教程图片请带上梯子访问.⭐
 
+微信项目：
+立即参与 -> http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy
+备用链接 -> http://h5.jiangqz.xyz/j/r2?upuid=161437&ch=xmy
+
 需要抓包以下内容:
 打开微信，进入阅读，在如下界面
 
-https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628124952.png
+./blob/main/QQ%E6%88%AA%E5%9B%BE20210628124952.png
 
 打开抓包惊喜抓包，然后回微信界面，点 点击阅读，开始零钱
 
