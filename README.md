@@ -41,7 +41,8 @@ https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122
 
 4.青龙拉取：添加定时任务 在命令那里粘贴 ql raw https://github.com/Tosoysauce/MBscript/blob/main/10sRead.js
 
-5.shuye面板的我不会拉取命令，只能自行上传到服务器。shuye拉取有大佬会的可以提供一些啊
+5.shuye面板的我不会拉取命令，只能自行上传到服务器。shuye拉取有大佬会的可以提供一些啊，脚本地址
+https://github.com/Tosoysauce/MBscript/blob/main/10sRead.js
 
 原仓地址：https://cdn.jsdelivr.net/gh/Wenmoux/scripts@wen/other/jrkuaixun.js
 
