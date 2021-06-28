@@ -9,7 +9,7 @@
 需要抓包以下内容:
 打开微信，进入阅读，在如下界面
 
-https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628124952.png
+![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628124952.png)
 
 打开抓包惊喜抓包，然后回微信界面，点 点击阅读，开始零钱
 
@@ -23,17 +23,17 @@ https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628124
 
 然后找如下图中的东西
 
-https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122128.png
+![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122128.png)
 
 单独长按就可以复制 Value 
 
 然后shuye配置（青龙/v2p自行测试）添加变量
 
-export Readck="复制的cookie"  ## 包含 PHPSESSID=xxx;udtauth==xxx
+- export Readck="复制的cookie"  ## 包含 PHPSESSID=xxx;udtauth==xxx
 
-export ReadckAgent="协议头"  ## User-Agent 的值，不包含 User-Agent
+- export ReadckAgent="协议头"  ## User-Agent 的值，不包含 User-Agent
 
-https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122906.png
+![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122906.png)
 
 添加完就如此
 
