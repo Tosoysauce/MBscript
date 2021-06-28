@@ -36,8 +36,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jrpush = $.isNode() ? (process.env.jrpush ? process.env.jrpush : false) :false;
 
 let host = $.getdata('read10surl')?$.getdata('read10surl'):`http://m.lainiwl.top`;
-let cookiesArr = [$.getdata('read10sck')];
-let ReadckAgent = "";
+let cookiesArr = [$.getdata('read10sck')]
 if ($.isNode()) {
     cookiesArr = process.env.Readck ? process.env.Readck.split("@") : []
     host = process.env.readapi ? process.env.readapi : host
