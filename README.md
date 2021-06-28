@@ -22,7 +22,7 @@ https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122
 
 单独长按就可以复制 Value 
 
-然后添加变量
+然后shuye配置（青龙/v2p自行测试）添加变量
 
 export Readck="复制的cookie"  ## 包含 PHPSESSID=xxx;udtauth==xxx
 
