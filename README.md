@@ -9,7 +9,7 @@
 需要抓包以下内容:
 打开微信，进入阅读，在如下界面
 
-![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628124952.png)
+![avatar](https://github.com/Tosoysauce/MBscript/blob/main/img/QQ%E6%88%AA%E5%9B%BE20210628124952.png)
 
 打开抓包工具抓包，然后回微信界面，点 点击阅读，开始零钱
 
@@ -25,7 +25,7 @@
 
 然后找如下图中的东西
 
-![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122128.png)
+![avatar](https://github.com/Tosoysauce/MBscript/blob/main/img/QQ%E6%88%AA%E5%9B%BE20210628122128.png)
 
 单独长按就可以复制结果 (Value)
 
@@ -35,7 +35,7 @@
 
 - export ReadckAgent="你复制的协议头"  ## 内容格式 User-Agent 的值，不包含 User-Agent
 
-![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122906.png)
+![avatar](https://github.com/Tosoysauce/MBscript/blob/main/img/QQ%E6%88%AA%E5%9B%BE20210628122906.png)
 
 添加完就如此
 
