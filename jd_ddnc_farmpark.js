@@ -1,152 +1,168 @@
+
 /*
-10s阅读
-微信打开立即参与 -> http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy
-备用链接 -> http://h5.jiangqz.xyz/j/r2?upuid=161437&ch=xmy
-
-使用教程请看 https://github.com/Tosoysauce/MBscript/blob/main/README.md
-
-每小时有0.3 一天5轮 一天1.5
-进不去关注10秒读书极速版公众号用官方链接
-使用方法:点击开始阅读 成功阅读一次即可抓到包
-脚本没写过盾的
-每次运行都要手动验证一次(也就是一天5次)
-点立即阅读,等文章出来后关闭页面(注意 千万不要返回)
-拉一人头提现0.3奖励0.5 0.8再奖励0.5
-https://t.me/wenmou_car
-
+东东乐园@wenmoux
+活动入口：东东农场->东东乐园(点大风车
+好像没啥用 就20💧
+更新地址：https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_ddnc_farmpark.js
+已支持IOS双京东账号, Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
+============Quantumultx===============
 [task_local]
-#10s阅读
-0 8-14/1 * * * https://raw.githubusercontent.com/Wenmoux/scripts/wen/other/jrkuaixun.js, tag=10s阅读, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-[rewrite_local]
-#10s阅读
-.*read_channel\/do_read&pageshow.* url script-request-header https://raw.githubusercontent.com/Wenmoux/scripts/wen/other/jrkuaixun.js
- 
-#loon
-http-request .*read_channel\/do_read&pageshow.* script-path=https://raw.githubusercontent.com/Wenmoux/scripts/wen/other/jrkuaixun.js, requires-body=true, timeout=10, tag=10s阅读
- 
-#surge
- 
-10s阅读 = type=http-request,pattern=.*read_channel\/do_read&pageshow.*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Wenmoux/scripts/wen/other/jrkuaixun.js,script-update-interval=0
- 
-[MITM]
-hostname = m.lainiwl.top
- 
-*/
-const $ = new Env('10s阅读');
-const notify = $.isNode() ? require('./sendNotify') : '';
-const jrpush = $.isNode() ? (process.env.jrpush ? process.env.jrpush : false) :false;
+#东东乐园
+30 7 * * * https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_ddnc_farmpark.js, tag=东东乐园, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
-let host = $.getdata('read10surl')?$.getdata('read10surl'):`http://m.lainiwl.top`;
-let cookiesArr = [$.getdata('read10sck')];
-let ReadckAgent = process.env.ReadckAgent;
+================Loon==============
+[Script]
+cron "30 7 * * *" script-path=https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_ddnc_farmpark.js tag=东东乐园
+
+===============Surge=================
+东东乐园 = type=cron,cronexp="30 7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_ddnc_farmpark.js
+
+============小火箭=========
+东东乐园 = type=cron,script-path=https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_ddnc_farmpark.js, cronexpr="30 7 * * *", timeout=3600, enable=true
+
+ */
+const $ = new Env('东东乐园');
+//Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
+const randomCount = $.isNode() ? 20 : 5;
+const notify = $.isNode() ? require('./sendNotify') : '';
+let merge = {}
+let codeList = []
+//IOS等用户直接用NobyDa的jd cookie
+let cookiesArr = [],
+    cookie = '';
 if ($.isNode()) {
-    cookiesArr = process.env.Readck ? process.env.Readck.split("@") : []
-    host = process.env.readapi ? process.env.readapi : host
-    //ReadckAgent = process.env.ReadckAgent
+    Object.keys(jdCookieNode).forEach((item) => {
+        cookiesArr.push(jdCookieNode[item])
+    })
+    if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
+} else {
+    cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-message = ""
-    !(async () => {
-        if (typeof $request !== "undefined") {
-            await read10sck()
-        }
-        if (!cookiesArr[0]) {
-            $.msg($.name, '【提示】请先获取cookie', '微信打开 http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy',{
-                "open-url": "http://h5.qingxue.xyz/j/r2?upuid=161437&ch=xmy"
-            });
-            return;
-        }
-        console.log(`共${cookiesArr.length}个账号`)
-        for (let k = 0; k < cookiesArr.length; k++) {
-            $.canRead = true
-            $.message = ""
-            cookie = cookiesArr[k];
-            for (let i = 0; i < 33 && $.canRead; i++) {
-                console.log(`账号【${k+1}】第${i+1}次阅读中`)
-                //   console.log(i)
-                let url = await read()
-                if (url) {
-                    if (url == "/read_channel/finish") {
-                        console.log("已达到阅读上限,下个小时再来吧")
-                        i = 9999
-                    } else {
-                        await read(url)
-                        await $.wait(1000);
-                    }
+
+const JD_API_HOST = `https://api.m.jd.com/client.action`;
+
+!(async () => {
+    if (!cookiesArr[0]) {
+        $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
+            "open-url": "https://bean.m.jd.com/"
+        });
+        return;
+    }
+
+    for (let i = 0; i <cookiesArr.length ; i++) {
+        cookie = cookiesArr[i];
+        if (cookie) {
+            $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+            $.index = i + 1;
+            $.isLogin = true;
+            $.nickName = '';
+            $.beans = 0
+            $.taskList = []
+            message = ''
+            console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
+            if (!$.isLogin) {
+                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {
+                    "open-url": "https://bean.m.jd.com/bean/signIndex.action"
+                });
+
+                if ($.isNode()) {
+                    await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
                 }
-                if ($.message.length != 0) {
-                    message += `账号【${k+1}】：${$.message} \n\n `
+                continue
+            }
+            await parkInit()
+            for (task of $.taskList) {
+                if (task.topResource.task.status == 3) {
+                    console.log(`任务 ${task.topResource.title} 已完成`)
+                }  else {
+                    console.log("去浏览：" + task.topResource.title)
+                    let index = task.name.match(/\d+/)[0] - 1
+                    console.log(task.topResource.task.advertId, index, task.type)
+                    await browse(task.topResource.task.advertId)
+                    await $.wait(1000);
+                    await browseAward(task.topResource.task.advertId, index, task.type)
                 }
             }
-        }   
-        if (message.length != 0) {
-         $.msg($.name, "", '10s阅读' + message) 
-         }
-        if ($.isNode() && jrpush) {
-            if (message.length != 0) {
-                await notify.sendNotify("10s阅读", `${message}\n`);
-            }
-        } else {
-            $.msg($.name, "", '10s阅读' + message)
         }
-        
-    })()
-    .catch((e) => $.logErr(e))
+    }
+
+
+})()
+.catch((e) => $.logErr(e))
     .finally(() => $.done())
 //获取活动信息
 
 
-function read10sck() {
-    if ($request.url.indexOf("do_read") > -1) {
-        const read10surls = $request.url
-        let read10surl = read10surls.match(/(.+?)\/read_channel/)
-//        $.msg($.name, "", '10s阅读 获取数据获取成功！'+read10surl)
-          if(read10surl)     $.setdata(read10surl[1],"read10surl")
-        if ($request.headers.Cookie) $.setdata($request.headers.Cookie, `read10sck`)
-        $.log(read10sck)
-        $.msg($.name, "", '10s阅读 获取数据获取成功！')
-    }
-}
 
-function read(url1) {
+
+function browseAward(id, index, type) {
     return new Promise(async (resolve) => {
-        if (!url1) {
-            url = `${host}/read_channel/do_read&pageshow&r=0.8321951810381554`
-        } else {
-            url = url1
-        }
-      let headers = {
-            cookie,
-            referer:url,
-            "X-Requested-With": "XMLHttpRequest",
-            "User-Agent":ReadckAgent,
-        }
-        let options = {
-            headers,
-            url
-        }
-         //  console.log(options)
-        $.get(options, async (err, resp, data) => {
+        const options = taskUrl("ddnc_farmpark_browseAward", `{"version":"1","channel":1,"advertId":"${id}","index":${index},"type":${type}}`)
+        //  console.log(options)
+        $.post(options, async (err, resp, data) => {
             try {
                 if (err) {
-                    //   console.log(`${JSON.stringify(err)}`);
-                    //  console.log(`${$.name} API请求失败，请检查网路重试`);
+                    console.log(`${JSON.stringify(err)}`);
+                    console.log(`${$.name} API请求失败，请检查网路重试`);
                 } else {
-                    //       console.log(url)
-                    if (!url1) {
-                        console.log(data)
-                        data = JSON.parse(data);
-                        if (data.url) {                       
-                            resolve(data.url)
-                        } else {
-                            console.log(data.click_check)
-                            if (data.click_check||data.data.jkey) {
-                                $.message = "该账号需要验证请手动阅读一次并关掉页面(不要点返回)\nReadckAgent"
-                        //        console.log($.message)
-                            } else {
-                                console.log(data)
-                            }
-                            $.canRead = false
-                        }
+                    data = JSON.parse(data);
+                //    console.log(data)
+                    if (data.result) {
+                        console.log("领取奖励成功,获得💧" + data.result.waterEnergy)
+                    } else {
+                        console.log(JSON.stringify(data))
+                    }
+
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        });
+    });
+}
+
+function browse(id) {
+    return new Promise(async (resolve) => {
+        const options = taskUrl("ddnc_farmpark_markBrowser", `{"version":"1","channel":1,"advertId":"${id}"}`)
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`);
+                    console.log(`${$.name} API请求失败，请检查网路重试`);
+                } else {
+                    data = JSON.parse(data);
+                    console.log(`浏览 ${id}  : ${data.success}`)
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        });
+    });
+}
+
+
+function parkInit() {
+    return new Promise(async (resolve) => {
+        const options = taskUrl("ddnc_farmpark_Init", `{"version":"1","channel":1}`)
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`);
+                    console.log(`${$.name} API请求失败，请检查网路重试`);
+                } else {
+                    data = JSON.parse(data);
+                    //    console.log(data)
+                    if (data.buildings) {
+                        $.taskList = data.buildings.filter(x => x.topResource.task)
+                    } else {
+                        console.log("获取任务列表失败,你不会是黑鬼吧")
                     }
                 }
             } catch (e) {
@@ -158,6 +174,25 @@ function read(url1) {
     });
 }
 
+
+function taskUrl(functionId, body) {
+    const time = Date.now();
+    return {
+        url: "https://api.m.jd.com/client.action",
+        body: `functionId=${functionId}&body=${encodeURIComponent(body)}&client=wh5&clientVersion=1.0.0&uuid=`,
+        headers: {
+            Accept: "application/json,text/plain, */*",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Language": "zh-cn",
+            Connection: "keep-alive",
+            Cookie: cookie,
+            Host: "api.m.jd.com",
+            Referer: "https://h5.m.jd.com/babelDiy/Zeus/J1C5d6E7VHb2vrb5sJijMPuj29K/index.html?babelChannel=ttt1&lng=107.147086&lat=33.255079&sid=cad74d1c843bd47422ae20cadf6fe5aw&un_area=8_573_6627_52446",
+            "User-Agent": "jdapp;android;9.4.4;10;3b78ecc3f490c7ba;network/UNKNOWN;model/M2006J10C;addressid/138543439;aid/3b78ecc3f490c7ba;oaid/7d5870c5a1696881;osVer/29;appBuild/85576;psn/3b78ecc3f490c7ba|541;psq/2;uid/3b78ecc3f490c7ba;adk/;ads/;pap/JA2015_311210|9.2.4|ANDROID 10;osv/10;pv/548.2;jdv/0|iosapp|t_335139774|appshare|CopyURL|1606277982178|1606277986;ref/com.jd.lib.personal.view.fragment.JDPersonalFragment;partner/xiaomi001;apprpd/MyJD_Main;Mozilla/5.0 (Linux; Android 10; M2006J10C Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045227 Mobile Safari/537.36",
+        }
+    }
+}
 
 function jsonParse(str) {
     if (typeof str == "string") {
