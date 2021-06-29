@@ -11,27 +11,29 @@
 
 ![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628124952.png)
 
-打开抓包惊喜抓包，然后回微信界面，点 点击阅读，开始零钱
+打开抓包工具抓包，然后回微信界面，点 点击阅读，开始零钱
 
 如果需要验证就点验证，会进入一个微信文件界面后直接 点 左上角 关闭即可 （不要点返回键，不要点返回键，不要点返回键）
 
 完成后进入抓包软件
 
-抓包是搜索：pageshow 或 do_read 
+抓包搜索：pageshow 或 do_read 
 
-或者url中：pageshow 或 do_read 
+或者过滤 url中：pageshow 或 do_read 
+
+达到快速定位需要的东西
 
 然后找如下图中的东西
 
 ![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122128.png)
 
-单独长按就可以复制 Value 
+单独长按就可以复制结果 (Value)
 
 然后shuye配置（青龙/v2p自行测试）添加变量
 
-- export Readck="复制的cookie"  ## 包含 PHPSESSID=xxx;udtauth==xxx
+- export Readck="你复制的cookie"  ## 内容格式包含 PHPSESSID=xxx;udtauth==xxx
 
-- export ReadckAgent="协议头"  ## User-Agent 的值，不包含 User-Agent
+- export ReadckAgent="你复制的协议头"  ## 内容格式 User-Agent 的值，不包含 User-Agent
 
 ![avatar](https://github.com/Tosoysauce/MBscript/blob/main/QQ%E6%88%AA%E5%9B%BE20210628122906.png)
 
